@@ -1,28 +1,12 @@
-import React from "react"
+import React, { useContext } from "react"
+import { ContextData } from "../context"
 
 const Title = () => {
-	const words = ["javascript", "monkey", "amazing", "pancake"]
-
-	const word = words[Math.floor(Math.random() * words.length)]
-
-	const answer = []
-	let remainingLetters = word.length
-
-	for (let i = 0; i < word.length; i++) {
-		answer[i] = "_"
-	}
-
-	for (let j = 0; j < word.length; j++) {
-		let guess = "r"
-		if (word[j] === guess) {
-			answer[j] = guess
-		}
-	}
-	console.log(remainingLetters)
+	const { generateWord } = useContext(ContextData)
 
 	return (
 		<div>
-			<p>{answer.join(" ")}</p>
+			<p>{generateWord()}</p>
 		</div>
 	)
 }
