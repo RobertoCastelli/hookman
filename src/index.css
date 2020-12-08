@@ -63,3 +63,20 @@ li:active {
 .checked {
 	color: red;
 }
+
+button {
+	text-transform: uppercase;
+	background-color: cadetblue;
+	color: var(--white1);
+	cursor: pointer;
+	padding: 0.5rem;
+	outline: none;
+	border: none;
+	transition: all 0.1s ease-in;
+}
+
+button:hover {
+	color: cadetblue;
+	background-color: var(--white1);
+	outline: 1px solid #333333;
+}

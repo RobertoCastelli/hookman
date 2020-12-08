@@ -2,11 +2,12 @@ import React, { useContext } from "react"
 import { ContextData } from "../context"
 
 const Title = () => {
-	const { generateWord } = useContext(ContextData)
-
+	const { answer, generateWord } = useContext(ContextData)
 	return (
 		<div>
-			<p>{generateWord()}</p>
+			<button onClick={() => generateWord()}>change</button>
+
+			<p>{answer}</p>
 		</div>
 	)
 }
