@@ -5,7 +5,7 @@ const Buttons = () => {
 	const { getTitle } = useContext(ContextData)
 	return (
 		<div className='buttons'>
-			<button onClick={() => getTitle()}>generate title</button>
+			<button onClick={() => getTitle()}>play</button>
 		</div>
 	)
 }

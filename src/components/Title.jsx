@@ -4,7 +4,7 @@ import { ContextData } from "../context"
 const Title = () => {
 	const { title } = useContext(ContextData)
 	return (
-		<div>
+		<div className='movie-title'>
 			<p>{title}</p>
 		</div>
 	)
