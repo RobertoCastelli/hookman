@@ -7,7 +7,7 @@ const ContextProvider = (props) => {
 	const titles = ["javascript", "monkey", "amazing", "pancake"]
 
 	const [guess, setGuess] = useState("")
-	const [title, setTitle] = useState("Guess the movie title")
+	const [title, setTitle] = useState("guess the movie title")
 
 	// GET the guessed character
 	const getGuess = (char) => setGuess(char)
