@@ -1,6 +1,8 @@
 import Head from "./components/Head"
-import Board from "./components/Board"
+import Title from "./components/Title"
+import Digits from "./components/Digits"
 import Footer from "./components/Footer"
+import Buttons from "./components/Buttons"
 import ContextProvider from "./context"
 
 function App() {
@@ -9,7 +11,9 @@ function App() {
 			<div className='container'>
 				<div className='content'>
 					<Head />
-					<Board />
+					<Buttons />
+					<Title />
+					<Digits />
 				</div>
 				<Footer />
 			</div>

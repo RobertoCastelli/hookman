@@ -56,12 +56,9 @@ li:hover {
 	outline: 0.1rem solid cadetblue;
 }
 
-li:active {
-	transform: scale(1.2);
-}
-
-.checked {
-	color: red;
+li:active,
+button:active {
+	transform: scale(1.1);
 }
 
 button {
@@ -72,11 +69,25 @@ button {
 	padding: 0.5rem;
 	outline: none;
 	border: none;
-	transition: all 0.1s ease-in;
+	transition: all 0.05s ease-in;
+	margin: 0.5rem;
 }
 
 button:hover {
 	color: cadetblue;
 	background-color: var(--white1);
 	outline: 1px solid #333333;
+}
+
+.buttons {
+	display: grid;
+	place-content: center;
+}
+
+.digits {
+	margin-top: 3rem;
+}
+
+.checked {
+	color: red;
 }

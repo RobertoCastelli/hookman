@@ -2,37 +2,28 @@ import React, { useState } from "react"
 export const ContextData = React.createContext()
 
 const ContextProvider = (props) => {
-	const [answer, setAnswer] = useState([])
 	const letters = "abcdefghilmnopqrstuvz".split("")
 	const numbers = "1234567890".split("")
+	const titles = ["javascript", "monkey", "amazing", "pancake"]
 
-	const handleDigits = (char) => console.log(char)
+	const [guess, setGuess] = useState("")
+	const [title, setTitle] = useState("Guess the movie title")
 
-	const generateWord = () => {
-		const words = ["javascript", "monkey", "amazing", "pancake"]
-		const word = words[Math.floor(Math.random() * words.length)]
-		let answerTemp = []
-		for (let i = 0; i < word.length; i++) {
-			answerTemp[i] = "_"
-		}
-		for (let j = 0; j < word.length; j++) {
-			let guess = "a"
-			if (word[j] === guess) {
-				answerTemp[j] = guess
-			}
-		}
-		return setAnswer(answerTemp.join(" "))
-	}
+	// GET the guessed character
+	const getGuess = (char) => setGuess(char)
+
+	// GET a movie TITLE
+	const getTitle = () =>
+		setTitle(titles[Math.floor(Math.random() * titles.length)])
 
 	return (
 		<ContextData.Provider
 			value={{
+				getGuess,
+				title,
+				getTitle,
 				letters,
 				numbers,
-				answer,
-				handleDigits,
-
-				generateWord,
 			}}>
 			{props.children}
 		</ContextData.Provider>
