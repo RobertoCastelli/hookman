@@ -12,18 +12,21 @@ const ContextProvider = (props) => {
 	// GET the guessed character
 	const getGuess = (char) => setGuess(char)
 
-	// GET a movie TITLE
-	const getTitle = () =>
-		setTitle(titles[Math.floor(Math.random() * titles.length)])
+	// CRIPT the movie TITLE
+	const criptTitle = () => {
+		const titleTemp = titles[Math.floor(Math.random() * titles.length)]
+		const criptTemp = [...titleTemp].map((c) => (c = "_")).join(" ")
+		setTitle(criptTemp)
+	}
 
 	return (
 		<ContextData.Provider
 			value={{
-				getGuess,
 				title,
-				getTitle,
+				criptTitle,
 				letters,
 				numbers,
+				getGuess,
 			}}>
 			{props.children}
 		</ContextData.Provider>

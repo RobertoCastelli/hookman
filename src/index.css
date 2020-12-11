@@ -66,11 +66,9 @@ button {
 	background-color: cadetblue;
 	color: var(--white1);
 	cursor: pointer;
-	padding: 1rem;
 	outline: none;
 	border: none;
-	transition: all 0.08s ease-in;
-	font-size: large;
+	transition: all 0.05s ease-in;
 }
 
 button:hover {

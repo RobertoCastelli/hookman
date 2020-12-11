@@ -12,10 +12,10 @@ function App() {
 			<div className='container'>
 				<div className='content'>
 					<Head />
-					<Buttons />
 					<Hangman />
-					<Title />
+					<Buttons />
 					<Digits />
+					<Title />
 				</div>
 				<Footer />
 			</div>
