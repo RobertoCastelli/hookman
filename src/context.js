@@ -6,27 +6,38 @@ const ContextProvider = (props) => {
 	const numbers = "1234567890".split("")
 	const titles = ["javascript", "monkey", "amazing", "pancake"]
 
-	const [guess, setGuess] = useState("")
 	const [title, setTitle] = useState("guess the movie title")
+	const [criptedTitle, setCriptedTitle] = useState("")
 
-	// GET the guessed character
-	const getGuess = (char) => setGuess(char)
-
-	// CRIPT the movie TITLE
+	// GET the movie TITLE and CRIPT it
 	const criptTitle = () => {
 		const titleTemp = titles[Math.floor(Math.random() * titles.length)]
 		const criptTemp = [...titleTemp].map((c) => (c = "_")).join(" ")
-		setTitle(criptTemp)
+		setTitle(titleTemp)
+		setCriptedTitle(criptTemp)
+	}
+	console.log(title)
+
+	// COMPARE guessedLetter & UPDATE the movie TITLE
+	const updateTitle = (guessedChar) => {
+		let criptTemp = [...criptedTitle].map((c) => {
+			if (c === guessedChar) {
+				console.log(c)
+			} else {
+				console.log("no")
+			}
+		})
+		setCriptedTitle(criptTemp)
 	}
 
 	return (
 		<ContextData.Provider
 			value={{
-				title,
+				criptedTitle,
 				criptTitle,
+				updateTitle,
 				letters,
 				numbers,
-				getGuess,
 			}}>
 			{props.children}
 		</ContextData.Provider>
