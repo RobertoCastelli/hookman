@@ -5,7 +5,7 @@ const Title = () => {
 	const { criptedTitle } = useContext(ContextData)
 	return (
 		<div className='movie-title'>
-			<p>{criptedTitle}</p>
+			<h3>{criptedTitle}</h3>
 		</div>
 	)
 }

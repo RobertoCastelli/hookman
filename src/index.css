@@ -53,28 +53,29 @@ li {
 
 li:hover {
 	color: cadetblue;
-	outline: 0.1rem solid cadetblue;
 }
 
-li:active,
+li:active {
+	transform: translateY(-4px);
+}
+
 button:active {
-	transform: scale(1.1);
+	color: brown;
 }
 
 button {
-	text-transform: uppercase;
-	background-color: cadetblue;
-	color: var(--white1);
+	color: cadetblue;
+	background-color: var(--white1);
 	cursor: pointer;
 	outline: none;
 	border: none;
-	transition: all 0.05s ease-in;
+	transition: transform 0.3s ease-in;
+	margin: 1rem;
 }
 
 button:hover {
-	color: cadetblue;
-	background-color: var(--white1);
-	outline: 1px solid #333333;
+	transform: rotate(270deg);
+	transition: transform 0.3s ease-out;
 }
 
 .hangman {
@@ -85,5 +86,9 @@ button:hover {
 }
 
 .movie-title {
+	color: cadetblue;
 	margin: 3rem;
+	font-size: x-large;
+	letter-spacing: 1rem;
+	text-transform: uppercase;
 }

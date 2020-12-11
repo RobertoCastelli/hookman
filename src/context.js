@@ -26,8 +26,6 @@ const ContextProvider = (props) => {
 			guessedLetter === c && (criptTemp[id] = c)
 			setCriptedTitle(criptTemp)
 		})
-
-		console.log(criptTemp)
 	}
 
 	return (
