@@ -38,11 +38,13 @@ const ContextProvider = (props) => {
 			setCounter((counterTemp -= 1))
 	}
 
-	// MARK letter after selcetion
-	const markLetter = (guessedLetter) =>
-		(document.getElementById(guessedLetter).style.color = "lightgrey")
+	// MARK letter after selection
+	const markLetter = (guessedLetter) => {
+		const char = document.getElementById(guessedLetter)
+		char.style = "color: lightgrey; pointer-events: none;"
+	}
 
-	// UPDATE the movie TITLE and remaining TRIES
+	// UPDATE data
 	const updateTitle = (guessedLetter) => {
 		markLetter(guessedLetter)
 		compareLetter(guessedLetter)
