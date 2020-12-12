@@ -6,16 +6,16 @@ const Digits = () => {
 
 	return (
 		<div className='digits'>
-			<ul>
+			<ul className='letters'>
 				{letters.map((letter) => (
-					<li key={letter} onClick={() => updateTitle(letter)}>
+					<li id={letter} key={letter} onClick={() => updateTitle(letter)}>
 						{letter}
 					</li>
 				))}
 			</ul>
-			<ul>
+			<ul className='numbers'>
 				{numbers.map((number) => (
-					<li key={number} onClick={() => updateTitle(number)}>
+					<li id={number} key={number} onClick={() => updateTitle(number)}>
 						{number}
 					</li>
 				))}

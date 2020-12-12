@@ -10,10 +10,11 @@ const ContextProvider = (props) => {
 	const [criptedTitle, setCriptedTitle] = useState("")
 	const [counter, setCounter] = useState(10)
 
-	// GET the movie TITLE, CRIPT it and generate a COUNTER
+	// GET the movie TITLE, CRIPT it and reset COUNTER
 	const criptTitle = () => {
 		const titleTemp = titles[Math.floor(Math.random() * titles.length)]
 		const criptTemp = [...titleTemp].map((c) => (c = "_"))
+		setCounter(10)
 		setTitle(titleTemp)
 		setCriptedTitle(criptTemp)
 	}
@@ -32,11 +33,18 @@ const ContextProvider = (props) => {
 	// UPDATE remaining tries
 	const countTries = (guessedLetter) => {
 		let counterTemp = counter
-		!title.includes(guessedLetter) && setCounter((counterTemp -= 1))
+		!title.includes(guessedLetter) &&
+			counterTemp > 0 &&
+			setCounter((counterTemp -= 1))
 	}
+
+	// MARK letter after selcetion
+	const markLetter = (guessedLetter) =>
+		(document.getElementById(guessedLetter).style.color = "lightgrey")
 
 	// UPDATE the movie TITLE and remaining TRIES
 	const updateTitle = (guessedLetter) => {
+		markLetter(guessedLetter)
 		compareLetter(guessedLetter)
 		countTries(guessedLetter)
 	}
