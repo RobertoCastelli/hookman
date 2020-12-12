@@ -70,7 +70,6 @@ button {
 	outline: none;
 	border: none;
 	transition: transform 0.3s ease-in;
-	margin: 1rem;
 }
 
 button:hover {
@@ -91,4 +90,15 @@ button:hover {
 	font-size: x-large;
 	letter-spacing: 1rem;
 	text-transform: uppercase;
+}
+
+.control-panel {
+	display: grid;
+	place-content: center;
+	color: cadetblue;
+}
+
+.counter {
+	display: flex;
+	justify-content: space-around;
 }

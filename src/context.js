@@ -8,8 +8,9 @@ const ContextProvider = (props) => {
 
 	const [title, setTitle] = useState("")
 	const [criptedTitle, setCriptedTitle] = useState("")
+	const [counter, setCounter] = useState(10)
 
-	// GET the movie TITLE and CRIPT it
+	// GET the movie TITLE, CRIPT it and generate a COUNTER
 	const criptTitle = () => {
 		const titleTemp = titles[Math.floor(Math.random() * titles.length)]
 		const criptTemp = [...titleTemp].map((c) => (c = "_"))
@@ -18,14 +19,26 @@ const ContextProvider = (props) => {
 	}
 	console.log(title)
 
-	// COMPARE guessedLetter & UPDATE the movie TITLE
-	const updateTitle = (guessedLetter) => {
+	// ADD LETTER to the cripted TITLE
+	const compareLetter = (guessedLetter) => {
 		let criptTemp = [...criptedTitle]
 		let titleTemp = [...title]
-		titleTemp.forEach((c, id) => {
+		titleTemp.map((c, id) => {
 			guessedLetter === c && (criptTemp[id] = c)
-			setCriptedTitle(criptTemp)
+			return setCriptedTitle(criptTemp)
 		})
+	}
+
+	// UPDATE remaining tries
+	const countTries = (guessedLetter) => {
+		let counterTemp = counter
+		!title.includes(guessedLetter) && setCounter((counterTemp -= 1))
+	}
+
+	// UPDATE the movie TITLE and remaining TRIES
+	const updateTitle = (guessedLetter) => {
+		compareLetter(guessedLetter)
+		countTries(guessedLetter)
 	}
 
 	return (
@@ -34,6 +47,7 @@ const ContextProvider = (props) => {
 				criptedTitle,
 				criptTitle,
 				updateTitle,
+				counter,
 				letters,
 				numbers,
 			}}>
