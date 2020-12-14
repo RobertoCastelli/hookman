@@ -1,19 +1,14 @@
 import React, { useContext } from "react"
-import { AiOutlineReload } from "react-icons/ai"
 import { ContextData } from "../context"
-import { IoMdHeartDislike } from "react-icons/io"
+import { AiOutlineReload } from "react-icons/ai"
 
 const Buttons = () => {
-	const { criptTitle, counter } = useContext(ContextData)
+	const { criptTitle } = useContext(ContextData)
 	return (
-		<div className='control-panel'>
+		<div>
 			<button onClick={() => criptTitle()}>
 				<AiOutlineReload size={40} />
 			</button>
-			<p className='counter'>
-				<IoMdHeartDislike size={20} />
-				{counter}
-			</p>
 		</div>
 	)
 }

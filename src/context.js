@@ -5,27 +5,44 @@ const ContextProvider = (props) => {
 	const letters = "abcdefghijklmnopqrstuvwxyz".split("")
 	const numbers = "1234567890".split("")
 	const titles = ["javascript", "monkey", "amazing", "pancake"]
+	const showMessageWrong = [
+		"Wrong guess!",
+		"You are bad at this!",
+		"C'mon, concentrate!",
+		"A kid could guess in one try",
+		"You are gonna hang!",
+		"Try the C, just a tip",
+		"Stay hungry, stay foolish",
+	]
 
 	const [title, setTitle] = useState("")
 	const [criptedTitle, setCriptedTitle] = useState("")
 	const [counter, setCounter] = useState(10)
+	const [message, setMessage] = useState("Guess the movie title")
 
 	// GET the movie TITLE, CRIPT it and reset COUNTER
 	const criptTitle = () => {
 		const titleTemp = titles[Math.floor(Math.random() * titles.length)]
 		const criptTemp = [...titleTemp].map((c) => (c = "_"))
+		setMessage("Guess the movie title")
 		setCounter(10)
 		setTitle(titleTemp)
 		setCriptedTitle(criptTemp)
 	}
 	console.log(title)
 
-	// ADD LETTER to the cripted TITLE
+	const generateWrongMessage = () =>
+		showMessageWrong[Math.floor(Math.random() * showMessageWrong.length)]
+
+	// UPDATE the cripted TITLE after the guess
 	const compareLetter = (guessedLetter) => {
 		let criptTemp = [...criptedTitle]
 		let titleTemp = [...title]
 		titleTemp.map((c, id) => {
-			guessedLetter === c && (criptTemp[id] = c)
+			if (guessedLetter === c) {
+				criptTemp[id] = c
+				setMessage("Good one, keep it up!")
+			}
 			return setCriptedTitle(criptTemp)
 		})
 	}
@@ -33,10 +50,12 @@ const ContextProvider = (props) => {
 	// UPDATE remaining tries
 	const countTries = (guessedLetter) => {
 		let counterTemp = counter
-		title !== "" &&
-			!title.includes(guessedLetter) &&
-			counterTemp > 0 &&
-			setCounter((counterTemp -= 1))
+		if (title !== "") {
+			if (!title.includes(guessedLetter) && counterTemp > 0) {
+				setCounter((counterTemp -= 1))
+				setMessage(generateWrongMessage())
+			}
+		}
 	}
 
 	// MARK letter after selection
@@ -59,6 +78,7 @@ const ContextProvider = (props) => {
 				criptedTitle,
 				criptTitle,
 				updateTitle,
+				message,
 				counter,
 				letters,
 				numbers,
