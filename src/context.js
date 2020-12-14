@@ -33,16 +33,18 @@ const ContextProvider = (props) => {
 	// UPDATE remaining tries
 	const countTries = (guessedLetter) => {
 		let counterTemp = counter
-		!title.includes(guessedLetter) &&
+		title !== "" &&
+			!title.includes(guessedLetter) &&
 			counterTemp > 0 &&
 			setCounter((counterTemp -= 1))
 	}
 
 	// MARK letter after selection
-	const markLetter = (guessedLetter) => {
-		const char = document.getElementById(guessedLetter)
-		char.style = "color: lightgrey; pointer-events: none;"
-	}
+	const markLetter = (guessedLetter) =>
+		title !== ""
+			? (document.getElementById(guessedLetter).style =
+					"color: lightgrey; pointer-events: none;")
+			: alert("Generate a title first you fool!")
 
 	// UPDATE data
 	const updateTitle = (guessedLetter) => {
