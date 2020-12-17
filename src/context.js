@@ -18,7 +18,7 @@ const ContextProvider = (props) => {
 	const [title, setTitle] = useState("")
 	const [criptedTitle, setCriptedTitle] = useState("")
 	const [counter, setCounter] = useState(10)
-	const [message, setMessage] = useState("Guess the movie title")
+	const [message, setMessage] = useState("Click the Hook to start!")
 
 	// GET the movie TITLE, CRIPT it and reset COUNTER
 	const criptTitle = () => {
