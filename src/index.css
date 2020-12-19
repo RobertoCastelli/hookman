@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Walter+Turncoat&display=swap");
+
 * {
 	box-sizing: border-box;
 }
@@ -11,21 +13,23 @@
 
 body {
 	margin: 0;
+	width: 100%;
+	height: 100%;
 	color: var(--black1);
 	background-color: var(--white1);
 	letter-spacing: 0.08rem;
-	font-family: "Ubuntu", sans-serif;
+	font-family: "Walter Turncoat", cursive;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
 .container {
 	text-align: center;
-	margin: auto;
-	max-width: 700px;
+	max-width: 500px;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	margin: auto;
 }
 
 .content {
@@ -34,25 +38,27 @@ body {
 
 ul {
 	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 	padding: 0;
 	list-style: none;
-	justify-content: center;
 }
 
 li {
-	margin-right: 1rem;
 	text-transform: uppercase;
 	cursor: pointer;
 	font-size: large;
-}
-
-li:hover,
-.game-message {
-	color: cadetblue;
+	border: 1px solid grey;
+	border-radius: 0.5rem;
+	width: 30px;
+	height: 30px;
+	margin: 0.3rem;
+	box-shadow: 0.2rem 0.2rem lightgrey;
 }
 
 li:active {
-	transform: translateY(-4px);
+	transform: translateY(0.1rem);
+	box-shadow: 0rem 0rem grey;
 }
 
 button {
@@ -65,19 +71,12 @@ button {
 }
 
 button:active {
-	color: brown;
+	transform: rotate(-15deg);
+	transition: transform 0.1s ease-out;
 }
 
-button:hover {
-	transform: rotate(-90deg);
-	transition: transform 0.3s ease-out;
-}
-
-.hangman {
-	border: 1px solid var(--black1);
-	width: 400px;
-	height: 400px;
-	margin: 1rem auto;
+.game-message {
+	color: cadetblue;
 }
 
 .movie-title {

@@ -11,13 +11,13 @@ const ContextProvider = (props) => {
 		"C'mon, concentrate!",
 		"A kid could guess in one try",
 		"You are gonna hang!",
-		"Try the C, just a tip",
+		"Try the 'C', just a tip",
 		"Stay hungry, stay foolish",
 	]
 
 	const [title, setTitle] = useState("")
 	const [criptedTitle, setCriptedTitle] = useState("")
-	const [counter, setCounter] = useState(10)
+	const [counter, setCounter] = useState(8)
 	const [message, setMessage] = useState("Click the Hook to start!")
 
 	// GET the movie TITLE, CRIPT it and reset COUNTER
@@ -25,7 +25,7 @@ const ContextProvider = (props) => {
 		const titleTemp = titles[Math.floor(Math.random() * titles.length)]
 		const criptTemp = [...titleTemp].map((c) => (c = "_"))
 		setMessage("Guess the movie title")
-		setCounter(10)
+		setCounter(8)
 		setTitle(titleTemp)
 		setCriptedTitle(criptTemp)
 	}
