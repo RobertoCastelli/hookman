@@ -17,7 +17,7 @@ const ContextProvider = (props) => {
 	]
 
 	// STATES
-	const [word, setWord] = useState([])
+	const [word, setWord] = useState("")
 	const [title, setTitle] = useState("")
 	const [criptedTitle, setCriptedTitle] = useState("")
 	const [counter, setCounter] = useState(8)
@@ -28,6 +28,10 @@ const ContextProvider = (props) => {
 		(document.getElementById(guessedLetter).style =
 			"color: lightgrey; pointer-events: none;")
 
+	// GENERATE random MESSAGES when WRONG
+	const generateRandomMessageIfWrong = () =>
+		showMessageWrong[Math.floor(Math.random() * showMessageWrong.length)]
+
 	// FETCH random WORD
 	useEffect(() => {
 		const fetchData = async () => {
@@ -35,22 +39,27 @@ const ContextProvider = (props) => {
 				"https://random-word-api.herokuapp.com/word?number=1"
 			)
 			const data = await res.json()
-			setWord(data)
+			setWord(data[0])
 		}
 		fetchData()
-	}, [])
+	}, [title])
 
 	// GET the movie TITLE, CRIPT IT and reset COUNTER
 	const criptTitle = () => {
-		const titleTemp = word[0]
-		const criptTemp = [...titleTemp].map((c) => (c = "_"))
+		const titleTemp = [...word]
+		const criptTemp = titleTemp.map((c) => (c = "_"))
 		lis.forEach((li) => (li.style = "color: #333333; pointer-events: visible;"))
 		setMessage("guess the magic word")
 		setCounter(8)
 		setTitle(titleTemp)
 		setCriptedTitle(criptTemp)
 	}
-	console.log(title)
+
+	// SELECT and DISABLE letter ONLY if game STARTED
+	const selectLetter = (guessedLetter) =>
+		title !== ""
+			? disableLetter(guessedLetter)
+			: alert("generate a title first you fool!")
 
 	// UPDATE the cripted TITLE after the guess
 	const compareLetter = (guessedLetter) => {
@@ -76,15 +85,23 @@ const ContextProvider = (props) => {
 		}
 	}
 
-	// SELECT and DISABLE letter ONLY if game STARTED
-	const selectLetter = (guessedLetter) =>
-		title !== ""
-			? disableLetter(guessedLetter)
-			: alert("generate a title first you fool!")
+	// WIN -> END GAME
+	useEffect(() => {
+		if (counter !== 8) {
+			if ([...criptedTitle].every((c) => c !== "_")) {
+				lis.forEach((li) => disableLetter(li.innerHTML))
+				setMessage("you win!")
+			}
+		}
+	}, [criptedTitle, counter, lis])
 
-	// GENERATE random WRONG MESSAGES
-	const generateRandomMessageIfWrong = () =>
-		showMessageWrong[Math.floor(Math.random() * showMessageWrong.length)]
+	// LOSE -> END GAME
+	useEffect(() => {
+		if (counter === 0) {
+			setMessage(`you lose! the word was: ${title.join("")}`)
+			lis.forEach((li) => disableLetter(li.innerHTML))
+		}
+	}, [counter, title, lis])
 
 	// UPDATE GAME
 	const updateTitle = (guessedLetter) => {
@@ -92,25 +109,6 @@ const ContextProvider = (props) => {
 		compareLetter(guessedLetter)
 		countTries(guessedLetter)
 	}
-
-	// LOSE -> END GAME
-	useEffect(() => {
-		if (counter === 0) {
-			setMessage(`you lose! the word was: ${title}`)
-			lis.forEach((li) => disableLetter(li.innerHTML))
-		}
-	}, [counter, title, lis])
-
-	// WIN -> END GAME
-	useEffect(() => {
-		let criptedTitleTemp = [...criptedTitle]
-		if (counter !== 8) {
-			if (criptedTitleTemp.every((c) => c !== "_")) {
-				lis.forEach((li) => disableLetter(li.innerHTML))
-				setMessage("you win!")
-			}
-		}
-	}, [criptedTitle, counter, lis])
 
 	return (
 		<ContextData.Provider
