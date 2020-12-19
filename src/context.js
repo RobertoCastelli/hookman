@@ -1,38 +1,56 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+
 export const ContextData = React.createContext()
 
 const ContextProvider = (props) => {
+	// GLOBALS
+	const lis = document.querySelectorAll("li")
 	const letters = "abcdefghijklmnopqrstuvwxyz".split("")
-	const numbers = "1234567890".split("")
-	const titles = ["javascript", "monkey", "amazing", "pancake"]
 	const showMessageWrong = [
-		"Wrong guess!",
-		"You are bad at this!",
-		"C'mon, concentrate!",
-		"A kid could guess in one try",
-		"You are gonna hang!",
-		"Try the 'C', just a tip",
-		"Stay hungry, stay foolish",
+		"wrong guess!",
+		"you are bad at this!",
+		"c'mon, concentrate!",
+		"a kid could guess in one try",
+		"you are gonna hang!",
+		"try the 'C', just a tip",
+		"stay hungry, stay foolish",
 	]
 
+	// STATES
+	const [word, setWord] = useState([])
 	const [title, setTitle] = useState("")
 	const [criptedTitle, setCriptedTitle] = useState("")
 	const [counter, setCounter] = useState(8)
-	const [message, setMessage] = useState("Click the Hook to start!")
+	const [message, setMessage] = useState("click the hook to start!")
 
-	// GET the movie TITLE, CRIPT it and reset COUNTER
+	// DISABLE selected letter
+	const disableLetter = (guessedLetter) =>
+		(document.getElementById(guessedLetter).style =
+			"color: lightgrey; pointer-events: none;")
+
+	// FETCH random WORD
+	useEffect(() => {
+		const fetchData = async () => {
+			const res = await fetch(
+				"https://random-word-api.herokuapp.com/word?number=1"
+			)
+			const data = await res.json()
+			setWord(data)
+		}
+		fetchData()
+	}, [])
+
+	// GET the movie TITLE, CRIPT IT and reset COUNTER
 	const criptTitle = () => {
-		const titleTemp = titles[Math.floor(Math.random() * titles.length)]
+		const titleTemp = word[0]
 		const criptTemp = [...titleTemp].map((c) => (c = "_"))
-		setMessage("Guess the movie title")
+		lis.forEach((li) => (li.style = "color: #333333; pointer-events: visible;"))
+		setMessage("guess the magic word")
 		setCounter(8)
 		setTitle(titleTemp)
 		setCriptedTitle(criptTemp)
 	}
 	console.log(title)
-
-	const generateWrongMessage = () =>
-		showMessageWrong[Math.floor(Math.random() * showMessageWrong.length)]
 
 	// UPDATE the cripted TITLE after the guess
 	const compareLetter = (guessedLetter) => {
@@ -41,7 +59,7 @@ const ContextProvider = (props) => {
 		titleTemp.map((c, id) => {
 			if (guessedLetter === c) {
 				criptTemp[id] = c
-				setMessage("Good one, keep it up!")
+				setMessage("good one, keep it up!")
 			}
 			return setCriptedTitle(criptTemp)
 		})
@@ -53,24 +71,46 @@ const ContextProvider = (props) => {
 		if (title !== "") {
 			if (!title.includes(guessedLetter) && counterTemp > 0) {
 				setCounter((counterTemp -= 1))
-				setMessage(generateWrongMessage())
+				setMessage(generateRandomMessageIfWrong())
 			}
 		}
 	}
 
-	// MARK letter after selection
-	const markLetter = (guessedLetter) =>
+	// SELECT and DISABLE letter ONLY if game STARTED
+	const selectLetter = (guessedLetter) =>
 		title !== ""
-			? (document.getElementById(guessedLetter).style =
-					"color: lightgrey; pointer-events: none;")
-			: alert("Generate a title first you fool!")
+			? disableLetter(guessedLetter)
+			: alert("generate a title first you fool!")
 
-	// UPDATE data
+	// GENERATE random WRONG MESSAGES
+	const generateRandomMessageIfWrong = () =>
+		showMessageWrong[Math.floor(Math.random() * showMessageWrong.length)]
+
+	// UPDATE GAME
 	const updateTitle = (guessedLetter) => {
-		markLetter(guessedLetter)
+		selectLetter(guessedLetter)
 		compareLetter(guessedLetter)
 		countTries(guessedLetter)
 	}
+
+	// LOSE -> END GAME
+	useEffect(() => {
+		if (counter === 0) {
+			setMessage(`you lose! the word was: ${title}`)
+			lis.forEach((li) => disableLetter(li.innerHTML))
+		}
+	}, [counter, title, lis])
+
+	// WIN -> END GAME
+	useEffect(() => {
+		let criptedTitleTemp = [...criptedTitle]
+		if (counter !== 8) {
+			if (criptedTitleTemp.every((c) => c !== "_")) {
+				lis.forEach((li) => disableLetter(li.innerHTML))
+				setMessage("you win!")
+			}
+		}
+	}, [criptedTitle, counter, lis])
 
 	return (
 		<ContextData.Provider
@@ -81,7 +121,6 @@ const ContextProvider = (props) => {
 				message,
 				counter,
 				letters,
-				numbers,
 			}}>
 			{props.children}
 		</ContextData.Provider>
