@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react"
+import click1 from "./sounds/clicks.wav"
+import uno from "./images/1.png"
+import due from "./images/2.png"
+import tre from "./images/3.png"
+import quattro from "./images/4.png"
+import cinque from "./images/5.png"
+import sei from "./images/6.png"
+import sette from "./images/7.png"
 
 export const ContextData = React.createContext()
 
 const ContextProvider = (props) => {
 	// GLOBALS
+	const clicks = new Audio(click1)
 	const lis = document.querySelectorAll("li")
 	const letters = "abcdefghijklmnopqrstuvwxyz".split("")
 	const showMessageWrong = [
@@ -20,8 +29,42 @@ const ContextProvider = (props) => {
 	const [word, setWord] = useState("")
 	const [title, setTitle] = useState("")
 	const [criptedTitle, setCriptedTitle] = useState("")
-	const [counter, setCounter] = useState(8)
+	const [counter, setCounter] = useState(6)
 	const [message, setMessage] = useState("click the hook to start!")
+	const [imageHang, setImageHang] = useState(uno)
+
+	// DEBUG
+	console.log(title) // <-< Delete This!
+
+	// CICLE HANGMAN IMAGE
+	const updateImage = () => {
+		switch (counter) {
+			case 6:
+				setImageHang(uno)
+				break
+			case 5:
+				setImageHang(due)
+				break
+			case 4:
+				setImageHang(tre)
+				break
+			case 3:
+				setImageHang(quattro)
+				break
+			case 2:
+				setImageHang(cinque)
+				break
+			case 1:
+				setImageHang(sei)
+				break
+			case 0:
+				setImageHang(sette)
+				break
+			default:
+				setImageHang(uno)
+				break
+		}
+	}
 
 	// DISABLE selected letter
 	const disableLetter = (guessedLetter) =>
@@ -50,7 +93,7 @@ const ContextProvider = (props) => {
 		const criptTemp = titleTemp.map((c) => (c = "_"))
 		lis.forEach((li) => (li.style = "color: #333333; pointer-events: visible;"))
 		setMessage("guess the magic word")
-		setCounter(8)
+		setCounter(6)
 		setTitle(titleTemp)
 		setCriptedTitle(criptTemp)
 	}
@@ -87,7 +130,7 @@ const ContextProvider = (props) => {
 
 	// WIN -> END GAME
 	useEffect(() => {
-		if (counter !== 8) {
+		if (counter !== 6) {
 			if ([...criptedTitle].every((c) => c !== "_")) {
 				lis.forEach((li) => disableLetter(li.innerHTML))
 				setMessage("you win!")
@@ -103,11 +146,16 @@ const ContextProvider = (props) => {
 		}
 	}, [counter, title, lis])
 
+	useEffect(() => {
+		updateImage()
+	}, [counter])
+
 	// UPDATE GAME
 	const updateTitle = (guessedLetter) => {
 		selectLetter(guessedLetter)
 		compareLetter(guessedLetter)
 		countTries(guessedLetter)
+		clicks.play()
 	}
 
 	return (
@@ -119,6 +167,7 @@ const ContextProvider = (props) => {
 				message,
 				counter,
 				letters,
+				imageHang,
 			}}>
 			{props.children}
 		</ContextData.Provider>

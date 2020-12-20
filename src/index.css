@@ -85,6 +85,10 @@ button:active {
 	transition: transform 0.1s ease-out;
 }
 
+img {
+	width: 200px;
+}
+
 .game-message {
 	color: cadetblue;
 }
