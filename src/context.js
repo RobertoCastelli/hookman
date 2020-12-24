@@ -36,36 +36,6 @@ const ContextProvider = (props) => {
 	// DEBUG
 	console.log(title) // <-< Delete This!
 
-	// CICLE HANGMAN IMAGE
-	const updateImage = () => {
-		switch (counter) {
-			case 6:
-				setImageHang(uno)
-				break
-			case 5:
-				setImageHang(due)
-				break
-			case 4:
-				setImageHang(tre)
-				break
-			case 3:
-				setImageHang(quattro)
-				break
-			case 2:
-				setImageHang(cinque)
-				break
-			case 1:
-				setImageHang(sei)
-				break
-			case 0:
-				setImageHang(sette)
-				break
-			default:
-				setImageHang(uno)
-				break
-		}
-	}
-
 	// DISABLE selected letter
 	const disableLetter = (guessedLetter) =>
 		(document.getElementById(guessedLetter).style =
@@ -147,6 +117,35 @@ const ContextProvider = (props) => {
 	}, [counter, title, lis])
 
 	useEffect(() => {
+		// CICLE HANGMAN IMAGE
+		const updateImage = () => {
+			switch (counter) {
+				case 6:
+					setImageHang(uno)
+					break
+				case 5:
+					setImageHang(due)
+					break
+				case 4:
+					setImageHang(tre)
+					break
+				case 3:
+					setImageHang(quattro)
+					break
+				case 2:
+					setImageHang(cinque)
+					break
+				case 1:
+					setImageHang(sei)
+					break
+				case 0:
+					setImageHang(sette)
+					break
+				default:
+					setImageHang(uno)
+					break
+			}
+		}
 		updateImage()
 	}, [counter])
 
